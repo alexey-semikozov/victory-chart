@@ -85,6 +85,7 @@ export default {
 
   getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements
     const childDomains = [];
+    let childDomainsLength = 0;
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
@@ -101,7 +102,8 @@ export default {
           assign({}, child.props, {data: parentData}) : child.props;
         const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
         if (childDomain) {
-          childDomains.push(...childDomain);
+          childDomains[childDomainsLength++] = childDomain[0];
+          childDomains[childDomainsLength++] = childDomain[1];
         }
       } else if (child.props && child.props.children) {
         children.push(...React.Children.toArray(child.props.children));
